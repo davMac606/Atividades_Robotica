@@ -1,0 +1,59 @@
+tarefa parar {
+    Motor("l", 0)
+    Motor("r", 0)
+}
+
+tarefa destravarMotores {
+    TravarMotor("r", falso)
+    TravarMotor("l", falso)
+}
+
+tarefa frente com numero velocidadeMotor {
+    destravarMotores()
+    Motor("l", velocidadeMotor + 0)
+    Motor("r", velocidadeMotor + 0)
+}
+
+tarefa virarEsquerda com numero velocidadeL, numero velocidadeR {
+    destravarMotores()
+    Esperar(20)
+        Motor("r", 0+velocidadeR)
+        Esperar(20)
+        Motor("l", 0-velocidadeL)
+}
+
+tarefa virarDireita com numero velocidadeL, numero velocidadeR {
+    destravarMotores()
+    Esperar(20)
+        Motor("l", 0+velocidadeL)
+        Esperar(20)
+        Motor("r", 0-velocidadeR)
+}
+
+inicio
+    AbrirConsole()
+    EscreverLinha("Início do programa.")
+    LigarLuz("led", 0, 255, 0)
+    enquanto (verdadeiro) farei {
+        Esperar(50)
+        se (Colorido("rc") e Colorido("lc")) entao {
+            frente(225)
+            Escrever("Seguir em frente.")
+        }
+        senao se (Colorido("rc")) entao {
+            Escrever("Virar à esquerda.")
+             virarEsquerda(150,150)
+        }
+        senao se (Colorido("lc")) entao {
+            Escrever("Virar à direita.")
+            virarDireita(150,150)
+        }
+        se (Cor("lc") == "Vermelho" ou Cor("rc") == "Vermelho") entao {
+            LigarLuz("led", 255, 0, 0)
+            LimparConsole()
+            Escrever("Fim do programa.")
+            parar()
+            Interromper()
+        }
+    }
+fim
