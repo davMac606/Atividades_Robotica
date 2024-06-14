@@ -26,44 +26,39 @@ tarefa virarDireita com numero velocidadeL, numero velocidadeR {
         Motor("r", 0-velocidadeR)
 }
 
-tarefa arcoiris {
-    LigarLuz("arcoirisfofo", 255, 0, 0) #vermelho
-    Esperar(1500)
-    LigarLuz("arcoirisfofo", 255, 165, 0) #laranja
-    Esperar(1500)   
-    LigarLuz("arcoirisfofo", 255, 248, 31) #amarelo
-    Esperar(1500)
-    LigarLuz("arcoirisfofo", 0, 255, 0) #verde
-    Esperar(1500)
-    LigarLuz("arcoirisfofo", 0, 255, 255) #azul claro
-    Esperar(1500)
-    LigarLuz("arcoirisfofo", 0, 0, 255) #azul
-    Esperar(1500)
-    LigarLuz("arcoirisfofo", 128, 0, 128) #roxo
-}
 
 inicio
     AbrirConsole()
     EscreverLinha("Início do programa.")
-
     LigarLuz("led", 0, 255, 0)
     enquanto (verdadeiro) farei {
+			TocarFrequencia("buzzer", 2000.14)
         se (Colorido("rc") e Colorido("lc")) entao {
             frente(300)
             Escrever("Seguir em frente.")
+			LigarCaneta("tv", 128, 0, 128)
+			LigarCaneta("girl", 0, 0, 255)
+
         }
         senao se (Colorido("rc")) entao {
             Escrever("Virar à esquerda.")
-             virarEsquerda(200,300)
+            virarEsquerda(200,300)
+			LigarCaneta("tv", 0, 0, 255)
+			LigarCaneta("girl", 128, 0, 128)
+			TocarFrequencia("buzzer",260.4)
         }
         senao se (Colorido("lc")) entao {
             Escrever("Virar à direita.")
             virarDireita(200,300)
+			LigarCaneta("tv", 0, 0, 255)
+			LigarCaneta("girl", 128, 0, 128)
+			TocarFrequencia("buzzer",300.5)
         }
         se (Cor("lc") == "Vermelho" ou Cor("rc") == "Vermelho") entao {
-            LigarLuz("led", 255, 0, 0)
-            arcoiris()
+            DesligarLuz("led")
             LimparConsole()
+			ApagarCaneta("tv")
+			ApagarCaneta("girl")
             Escrever("Fim do programa.")
             parar()
             Interromper()
